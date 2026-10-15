@@ -11,6 +11,7 @@ let appState = {
   orders: [],
   users: [],
   cart: JSON.parse(localStorage.getItem('electro_cart')) || [],
+  wishlist: JSON.parse(localStorage.getItem('electro_wishlist')) || [],
   discountPercent: 0,
   activeCategory: 'All',
   currentUser: JSON.parse(localStorage.getItem('electro_user')) || {
