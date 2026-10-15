@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ElectroSphere | Administrator Portal</title>
+  
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              dark: '#090d16'
+            },
+            cyan: {
+              500: '#06b6d4',
+              600: '#0891b2'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Chart.js (Data Visualizations) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-brand-dark text-slate-100 min-h-screen flex flex-col font-sans">
+
+  <!-- ===================================================================== -->
+  <!-- 1. ADMIN AUTHENTICATION GATE (LOGIN SCREEN)                           -->
+  <!-- ===================================================================== -->
+  <div id="adminLoginGate" class="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
+    <!-- Ambient Glow Orbs -->
+    <div class="glow-orb -top-20 -left-20"></div>
+    <div class="glow-orb -bottom-20 -right-20" style="background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 70%);"></div>
+
+    <div class="max-w-md w-full bg-slate-900/90 border border-slate-800 rounded-3xl p-8 shadow-2xl relative z-10 backdrop-blur-xl">
+      
+      <!-- Brand & Lock Icon -->
+      <div class="text-center mb-6">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-cyan-500 flex items-center justify-center text-white text-2xl mx-auto mb-3 shadow-lg shadow-brand-500/30">
+          <i class="fa-solid fa-user-shield"></i>
+        </div>
+        <h2 class="text-2xl font-extrabold tracking-tight text-white">
+          Electro<span class="text-cyan-400">Sphere</span> Admin
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">
+          Restricted Portal • Administrator Credentials Required
+        </p>
+      </div>
+
+      <!-- Quick Demo Badge -->
+      <div class="mb-5 p-3 rounded-2xl bg-slate-950/70 border border-slate-800 text-[11px] text-slate-400 space-y-1">
+        <div class="font-bold text-slate-200 flex items-center gap-1.5">
+          <i class="fa-solid fa-key text-amber-400"></i> Authorized Admin Credentials:
+        </div>
+        <div class="cursor-pointer hover:text-cyan-400 font-mono transition" onclick="fillAdminCreds('admin@gmail.com', 'adminpassword123')">
+          📧 <strong>Gmail:</strong> admin@gmail.com
+        </div>
+        <div class="cursor-pointer hover:text-cyan-400 font-mono transition" onclick="fillAdminCreds('admin@gmail.com', 'adminpassword123')">
+          🔑 <strong>Password:</strong> adminpassword123
+        </div>
+      </div>
+
+      <!-- Error Alert Message -->
+      <div id="adminLoginError" class="hidden mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-semibold flex items-center gap-2">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span id="adminErrorMsg">Access Denied: Invalid credentials.</span>
+      </div>
+
+      <!-- Admin Login Form -->
+      <form id="adminLoginForm" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-bold mb-1.5 text-slate-300">Admin Email / Gmail *</label>
+          <div class="relative">
+            <i class="fa-regular fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500"></i>
+            <input type="email" id="adminEmailInput" required placeholder="admin@gmail.com" class="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-brand-500 text-slate-200 outline-none transition font-mono">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold mb-1.5 text-slate-300">Secret Password *</label>
+          <div class="relative">
+            <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500"></i>
+            <input type="password" id="adminPasswordInput" required placeholder="••••••••••••" class="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-brand-500 text-slate-200 outline-none transition font-mono">
+          </div>
+        </div>
+
+        <button type="submit" id="adminLoginBtn" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-cyan-600 hover:from-brand-500 hover:to-cyan-500 text-white font-extrabold text-xs shadow-lg shadow-brand-500/25 transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-right-to-bracket"></i> Sign In to Administrator Portal
+        </button>
+      </form>
+
+      <!-- Return to Storefront -->
+      <div class="mt-6 pt-4 border-t border-slate-800 text-center">
+        <a href="index.html" class="text-xs text-slate-400 hover:text-white transition flex items-center justify-center gap-1.5">
+          <i class="fa-solid fa-arrow-left"></i> Return to Customer Storefront
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 2. ADMIN DASHBOARD WORKSPACE (UNLOCKED UPON AUTHENTICATION)           -->
+  <!-- ===================================================================== -->
+  <div id="adminDashboardWorkspace" class="hidden min-h-screen flex flex-col">
+    
+    <!-- Admin Top Navbar -->
+    <header class="sticky top-0 z-40 bg-slate-900/90 border-b border-slate-800 backdrop-blur-md">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+        
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-cyan-500 flex items-center justify-center text-white shadow-md">
+            <i class="fa-solid fa-shield-halved text-lg"></i>
+          </div>
+          <div>
+            <span class="text-xl font-extrabold tracking-tight text-white">
+              Electro<span class="text-cyan-400">Sphere</span> <span class="text-xs font-semibold bg-brand-500/20 text-brand-400 px-2 py-0.5 rounded-full border border-brand-500/30 uppercase tracking-widest ml-1">Admin</span>
+            </span>
+            <div class="text-[11px] text-emerald-400 flex items-center gap-1 font-mono">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-badge"></span> MongoDB Connected • Live Operations
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Admin Controls -->
+        <div class="flex items-center space-x-4">
+          <!-- Customer Store Link -->
+          <a href="index.html" target="_blank" class="hidden sm:flex items-center gap-1.5 text-xs text-slate-400 hover:text-white bg-slate-800 px-3 py-2 rounded-xl border border-slate-700 transition">
+            <i class="fa-solid fa-store text-cyan-400"></i> View Customer Store
+          </a>
+
+          <!-- Admin Identity Badge -->
+          <div class="flex items-center gap-2.5 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
+            <img id="adminProfileImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Admin" class="w-7 h-7 rounded-full object-cover">
+            <div class="text-left hidden sm:block">
+              <div id="adminNameDisplay" class="font-bold text-xs text-white">Super Admin</div>
+              <div id="adminEmailDisplay" class="text-[10px] text-slate-400 font-mono truncate max-w-[140px]">admin@gmail.com</div>
+            </div>
+          </div>
+
+          <!-- Sign Out Button -->
+          <button onclick="adminLogout()" class="px-3.5 py-2 rounded-xl bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 text-xs font-bold transition flex items-center gap-1.5">
+            <i class="fa-solid fa-lock"></i> <span class="hidden sm:inline">Lock / Sign Out</span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Admin Workspace Body -->
+    <main class="flex-1 py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-8">
+      
+      <!-- Welcome Header -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 class="text-3xl font-extrabold text-white">Operations & Executive Console</h1>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">Real-time revenue telemetry, inventory control, and fulfillment tracking.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="openAddProductModal()" class="px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs shadow-md shadow-brand-500/20 flex items-center gap-2 transition">
+            <i class="fa-solid fa-plus"></i> Add New Product
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 KPI Metrics Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 shadow-sm relative overflow-hidden">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Gross Revenue</span>
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-lg">
+              <i class="fa-solid fa-sack-dollar"></i>
+            </div>
+          </div>
+          <div class="mt-4">
+            <span id="adminKpiRevenue" class="text-2xl sm:text-3xl font-extrabold text-white font-mono">$182,038.48</span>
+            <span class="text-emerald-500 text-xs font-bold ml-2"><i class="fa-solid fa-arrow-trend-up"></i> +18.4%</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Stripe & PayPal transactions</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 shadow-sm">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Orders</span>
+            <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-lg">
+              <i class="fa-solid fa-box-open"></i>
+            </div>
+          </div>
+          <div class="mt-4">
+            <span id="adminKpiOrders" class="text-2xl sm:text-3xl font-extrabold text-white font-mono">1,492</span>
+            <span class="text-brand-500 text-xs font-bold ml-2"><i class="fa-solid fa-arrow-trend-up"></i> +12%</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">98.6% fulfillment rate</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 shadow-sm">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Active Customers</span>
+            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center text-lg">
+              <i class="fa-solid fa-users"></i>
+            </div>
+          </div>
+          <div class="mt-4">
+            <span id="adminKpiCustomers" class="text-2xl sm:text-3xl font-extrabold text-white font-mono">24,850</span>
+            <span class="text-cyan-500 text-xs font-bold ml-2"><i class="fa-solid fa-arrow-trend-up"></i> +8.1%</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">JWT verified accounts</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 shadow-sm">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Avg Order Value</span>
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-lg">
+              <i class="fa-solid fa-calculator"></i>
+            </div>
+          </div>
+          <div class="mt-4">
+            <span id="adminKpiAvgValue" class="text-2xl sm:text-3xl font-extrabold text-white font-mono">$724.80</span>
+            <span class="text-amber-500 text-xs font-bold ml-2">High Tier</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Conversion rate 4.82%</p>
+        </div>
+
+      </div>
+
+      <!-- Charts Row -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-8 p-6 rounded-2xl bg-slate-900 border border-slate-800 shadow-sm">
+          <div class="flex justify-between items-center mb-6">
+            <div>
+              <h3 class="font-bold text-white text-base">Monthly Revenue Telemetry (2026)</h3>
+              <p class="text-xs text-slate-400">Aggregated payments across Stripe, PayPal, and Bank wire</p>
+            </div>
+            <span class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <i class="fa-solid fa-circle-check"></i> MongoDB Live Feed
+            </span>
+          </div>
+          <div class="h-64 sm:h-72">
+            <canvas id="adminRevenueChart"></canvas>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 p-6 rounded-2xl bg-slate-900 border border-slate-800 shadow-sm flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-white text-base">Category Distribution</h3>
+            <p class="text-xs text-slate-400">Hardware sales ratio breakdown</p>
+          </div>
+          <div class="h-56 sm:h-64 my-auto flex items-center justify-center">
+            <canvas id="adminCategoryChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs Navigation (Orders | Products | Users) -->
+      <div class="bg-slate-900 rounded-3xl border border-slate-800 shadow-sm overflow-hidden">
+        
+        <div class="flex flex-wrap items-center justify-between px-6 py-4 border-b border-slate-800 gap-4">
+          <div class="flex space-x-6 text-sm">
+            <button onclick="switchAdminTab('ordersTab')" id="tabBtn-ordersTab" class="admin-tab active font-bold text-cyan-400 pb-1 border-b-2 border-cyan-400 flex items-center gap-2">
+              <i class="fa-solid fa-box"></i> Orders Fulfillment (<span id="adminOrdersBadge">3</span>)
+            </button>
+            <button onclick="switchAdminTab('productsTab')" id="tabBtn-productsTab" class="admin-tab font-semibold text-slate-400 hover:text-white pb-1 flex items-center gap-2">
+              <i class="fa-solid fa-cubes"></i> Inventory Management
+            </button>
+            <button onclick="switchAdminTab('rolesTab')" id="tabBtn-rolesTab" class="admin-tab font-semibold text-slate-400 hover:text-white pb-1 flex items-center gap-2">
+              <i class="fa-solid fa-user-lock"></i> User Access Matrix
+            </button>
+          </div>
+        </div>
+
+        <!-- Orders Table -->
+        <div id="adminOrdersTabContent" class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead class="bg-slate-950 text-slate-400 font-semibold uppercase text-[11px] tracking-wider border-b border-slate-800">
+              <tr>
+                <th class="px-6 py-3.5">Order ID & Date</th>
+                <th class="px-6 py-3.5">Customer Details</th>
+                <th class="px-6 py-3.5">Items Purchased</th>
+                <th class="px-6 py-3.5">Total & Payment</th>
+                <th class="px-6 py-3.5">Fulfillment Status</th>
+                <th class="px-6 py-3.5 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminOrdersTableBody" class="divide-y divide-slate-800">
+              <!-- Injected via admin.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Products Table -->
+        <div id="adminProductsTabContent" class="hidden overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead class="bg-slate-950 text-slate-400 font-semibold uppercase text-[11px] tracking-wider border-b border-slate-800">
+              <tr>
+                <th class="px-6 py-3.5">Hardware Item</th>
+                <th class="px-6 py-3.5">Category</th>
+                <th class="px-6 py-3.5">Price</th>
+                <th class="px-6 py-3.5">Stock Level</th>
+                <th class="px-6 py-3.5">Rating</th>
+                <th class="px-6 py-3.5 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminProductsTableBody" class="divide-y divide-slate-800">
+              <!-- Injected via admin.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Roles Table -->
+        <div id="adminRolesTabContent" class="hidden p-6 space-y-4">
+          <div class="text-xs text-slate-400 max-w-xl">
+            Control user access roles across your enterprise workspace. Change any account between Admin, Manager, and Customer.
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="adminUsersListGrid">
+            <!-- Injected via admin.js -->
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Add Product Modal -->
+  <div id="adminAddProductModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative text-slate-100">
+      <button onclick="closeAddProductModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white text-xl">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <h3 class="text-xl font-extrabold text-white mb-1">Add Hardware Product</h3>
+      <p class="text-xs text-slate-400 mb-4">Register new SKU to the live E-Commerce database</p>
+
+      <form id="adminAddProductForm" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold mb-1">Product Title *</label>
+          <input type="text" id="adminNewProdName" required placeholder="e.g. Nexus Tab Ultra 14" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold mb-1">Category *</label>
+            <select id="adminNewProdCat" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white">
+              <option value="Smartphones">Smartphones</option>
+              <option value="Laptops">Laptops</option>
+              <option value="Audio">Audio Studio</option>
+              <option value="Wearables">Wearables</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold mb-1">Price ($USD) *</label>
+            <input type="number" step="0.01" id="adminNewProdPrice" required placeholder="899.99" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold mb-1">Inventory Stock Units *</label>
+            <input type="number" id="adminNewProdStock" required placeholder="25" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white">
+          </div>
+          <div>
+            <label class="block font-bold mb-1">Badge Tag</label>
+            <input type="text" id="adminNewProdBadge" placeholder="e.g. Flagship 2026" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white">
+          </div>
+        </div>
+        <div>
+          <label class="block font-bold mb-1">Image URL</label>
+          <input type="url" id="adminNewProdImage" placeholder="https://images.unsplash.com/..." class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white">
+        </div>
+        <div>
+          <label class="block font-bold mb-1">Description</label>
+          <textarea id="adminNewProdDesc" rows="2" placeholder="Hardware specifications..." class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white"></textarea>
+        </div>
+        <button type="submit" class="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs shadow-md">
+          Save Product to Database
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="adminToast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl text-xs font-semibold bg-slate-900 text-white border border-slate-700">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-base" id="adminToastIcon"></i>
+    <span id="adminToastMsg">Action executed.</span>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
+

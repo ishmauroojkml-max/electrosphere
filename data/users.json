@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Alex Mercer (Admin)",
+    "email": "admin@electrosphere.com",
+    "password": "adminpassword123",
+    "role": "Admin",
+    "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
+    "department": "Executive Operations",
+    "joined": "2025-01-15"
+  },
+  {
+    "id": 2,
+    "name": "Super Admin",
+    "email": "admin@gmail.com",
+    "password": "adminpassword123",
+    "role": "Admin",
+    "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
+    "department": "Global Administrator",
+    "joined": "2025-01-10"
+  },
+  {
+    "id": 3,
+    "name": "Sarah Connor",
+    "email": "manager@electrosphere.com",
+    "password": "managerpassword123",
+    "role": "Manager",
+    "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80",
+    "department": "Inventory & Logistics",
+    "joined": "2025-03-20"
+  },
+  {
+    "id": 4,
+    "name": "Usman Malik",
+    "email": "customer@example.com",
+    "password": "customerpassword123",
+    "role": "Customer",
+    "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80",
+    "department": "Customer",
+    "joined": "2026-02-10"
+  }
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "id": "ORD-78912",
+    "customer": {
+      "name": "Hamza Tariq",
+      "email": "hamza.tariq@example.com",
+      "phone": "+92 300 8765432",
+      "address": "45 Cyber Street, Sector F-6, Islamabad"
+    },
+    "items": [
+      {
+        "id": 1,
+        "name": "Nexus Pro 16 Ultra 5G",
+        "price": 1099.99,
+        "qty": 1
+      }
+    ],
+    "subtotal": 1099.99,
+    "discount": 50.00,
+    "tax": 0.00,
+    "shipping": 0.00,
+    "total": 1049.99,
+    "paymentMethod": "Stripe Card (Simulated)",
+    "paymentStatus": "Paid",
+    "status": "Shipped",
+    "trackingNumber": "TRK-EXP-992144",
+    "createdAt": "2026-10-12T11:20:00.000Z"
+  },
+  {
+    "id": "ORD-78913",
+    "customer": {
+      "name": "Zainab Fatima",
+      "email": "zainab.f@example.com",
+      "phone": "+92 321 9876543",
+      "address": "Apartment 4B, Gulberg Heights, Lahore"
+    },
+    "items": [
+      {
+        "id": 3,
+        "name": "Sony WH-1000XM6 ANC Studio",
+        "price": 379.99,
+        "qty": 1
+      },
+      {
+        "id": 7,
+        "name": "AuraPods Spatial Pro Earbuds",
+        "price": 199.00,
+        "qty": 1
+      }
+    ],
+    "subtotal": 578.99,
+    "discount": 0.00,
+    "tax": 0.00,
+    "shipping": 0.00,
+    "total": 578.99,
+    "paymentMethod": "PayPal Sandbox",
+    "paymentStatus": "Paid",
+    "status": "Processing",
+    "trackingNumber": "TRK-DHL-554120",
+    "createdAt": "2026-10-13T14:45:00.000Z"
+  },
+  {
+    "id": "ORD-78914",
+    "customer": {
+      "name": "Bilal Ahmed",
+      "email": "bilal.ahmed@example.com",
+      "phone": "+92 333 1122334",
+      "address": "DHA Phase 6, Karachi"
+    },
+    "items": [
+      {
+        "id": 4,
+        "name": "Titan Chrono Smartwatch Ultra",
+        "price": 429.50,
+        "qty": 1
+      }
+    ],
+    "subtotal": 429.50,
+    "discount": 20.00,
+    "tax": 0.00,
+    "shipping": 0.00,
+    "total": 409.50,
+    "paymentMethod": "Cash on Delivery",
+    "paymentStatus": "Pending",
+    "status": "Pending",
+    "trackingNumber": "TRK-TCS-312988",
+    "createdAt": "2026-10-14T09:10:00.000Z"
+  }
+]
+

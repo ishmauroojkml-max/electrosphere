@@ -1,0 +1,26 @@
+{
+  "name": "electrosphere-fullstack",
+  "version": "1.0.0",
+  "description": "Full-Stack E-Commerce Store with Three.js 3D Landing Page & SaaS Analytics Portal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "ecommerce",
+    "threejs",
+    "saas-dashboard",
+    "jwt-auth",
+    "stripe-simulation",
+    "express",
+    "nodejs"
+  ],
+  "author": "ElectroSphere",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}

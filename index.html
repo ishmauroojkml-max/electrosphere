@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ElectroSphere - Full-Stack E-Commerce Store with Three.js 3D Interactive Landing Page & SaaS Analytics Portal">
+  <meta name="theme-color" content="#090d16">
+  <title>ElectroSphere | Next-Gen E-Commerce, 3D Experience & SaaS Portal</title>
+  
+  <!-- Favicon (SVG vector icon) -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="alternate icon" type="image/png" href="assets/favicon.svg">
+
+  <!-- Google Fonts (Plus Jakarta Sans & JetBrains Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <!-- Three.js (WebGL 3D Engine & Graphics) CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
+  <!-- Chart.js (SaaS Analytics & Data Visualizations) CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              dark: '#090d16'
+            },
+            cyan: {
+              500: '#06b6d4',
+              600: '#0891b2'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Master Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-brand-dark dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-gradient-to-r from-brand-600 via-indigo-600 to-cyan-600 text-white text-xs sm:text-sm py-2 px-4 shadow-sm">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <span class="bg-white/20 px-2 py-0.5 rounded-full font-bold text-[11px] uppercase tracking-wider">Flash Sale</span>
+        <p class="truncate">🔥 15% OFF with coupon <strong class="underline decoration-white font-mono">TECH2026</strong> + Free Express Global Shipping!</p>
+      </div>
+      <div class="hidden md:flex items-center space-x-4">
+        <a href="admin.html" class="hover:text-cyan-200 transition text-xs font-semibold flex items-center gap-1.5 bg-black/30 px-3 py-1 rounded-full border border-white/10" title="Administrator Access">
+          <i class="fa-solid fa-lock text-amber-300"></i> Admin Portal (Login)
+        </a>
+        <button id="themeToggleBtn" class="hover:text-cyan-200 transition text-sm flex items-center gap-1">
+          <i class="fa-solid fa-moon" id="themeIcon"></i> <span id="themeText">Dark Mode</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Primary Sticky Navbar -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="#home" class="flex items-center space-x-3 group">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-600 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-brand-500/30 group-hover:scale-105 transition">
+          <i class="fa-solid fa-microchip text-xl"></i>
+        </div>
+        <div>
+          <span class="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 via-brand-600 to-cyan-500 dark:from-white dark:via-indigo-400 dark:to-cyan-400 bg-clip-text text-transparent">
+            Electro<span class="text-brand-600 dark:text-cyan-400">Sphere</span>
+          </span>
+          <span class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">3D • Electronics Store</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden lg:flex items-center space-x-8 font-semibold text-sm">
+        <a href="#experience" class="hover:text-brand-600 dark:hover:text-cyan-400 transition flex items-center gap-2">
+          <i class="fa-solid fa-cube text-cyan-500"></i> 3D Experience
+        </a>
+        <a href="#store" class="hover:text-brand-600 dark:hover:text-cyan-400 transition flex items-center gap-2">
+          <i class="fa-solid fa-bag-shopping text-brand-500"></i> Storefront
+        </a>
+        <a href="#api-tester" class="hover:text-brand-600 dark:hover:text-cyan-400 transition flex items-center gap-2">
+          <i class="fa-solid fa-bolt text-amber-500"></i> REST API Tester
+        </a>
+        <a href="admin.html" class="text-slate-400 hover:text-amber-400 transition flex items-center gap-1.5 text-xs bg-slate-100 dark:bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
+          <i class="fa-solid fa-lock text-amber-400"></i> Admin Portal
+        </a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center space-x-3">
+        <!-- Live Search Input -->
+        <div class="relative hidden sm:block w-48 xl:w-64">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <input type="text" id="navbarSearchInput" placeholder="Search gadgets, specs..." class="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200 transition">
+        </div>
+
+        <!-- Cart Button -->
+        <button id="openCartBtn" class="relative p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-brand-50 dark:hover:bg-slate-700 hover:text-brand-600 transition shadow-sm" title="View Cart">
+          <i class="fa-solid fa-cart-shopping text-base"></i>
+          <span id="cartBadgeCount" class="absolute -top-1 -right-1 bg-brand-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900">0</span>
+        </button>
+
+        <!-- User Authentication Button -->
+        <button id="authModalBtn" class="flex items-center space-x-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold shadow-md shadow-brand-500/20 transition">
+          <i class="fa-solid fa-user"></i>
+          <span id="authButtonLabel">Sign In</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobileMenuBtn" class="lg:hidden p-2 text-slate-600 dark:text-slate-300">
+          <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Dropdown -->
+    <div id="mobileNavMenu" class="hidden lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-4 space-y-3 font-semibold text-sm">
+      <a href="#experience" class="block py-2 text-slate-700 dark:text-slate-200"><i class="fa-solid fa-cube text-cyan-500 mr-2"></i> 3D Experience</a>
+      <a href="#store" class="block py-2 text-slate-700 dark:text-slate-200"><i class="fa-solid fa-bag-shopping text-brand-500 mr-2"></i> Storefront</a>
+      <a href="#dashboard" class="block py-2 text-slate-700 dark:text-slate-200"><i class="fa-solid fa-chart-pie text-emerald-500 mr-2"></i> SaaS Analytics</a>
+      <a href="#api-tester" class="block py-2 text-slate-700 dark:text-slate-200"><i class="fa-solid fa-bolt text-amber-500 mr-2"></i> REST API Tester</a>
+      <div class="pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center">
+        <span class="text-xs text-slate-400">Theme</span>
+        <button onclick="toggleTheme()" class="text-xs bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg">Switch Mode</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- 1. THREE.JS 3D INTERACTIVE LANDING SECTION                           -->
+  <!-- ===================================================================== -->
+  <section id="experience" class="relative overflow-hidden py-12 lg:py-20 bg-slate-900 text-white min-h-[720px] flex items-center">
+    <!-- Ambient 3D Glow Orbs -->
+    <div class="glow-orb top-10 left-10"></div>
+    <div class="glow-orb bottom-10 right-10" style="background: radial-gradient(circle, rgba(6, 182, 212, 0.25) 0%, transparent 70%);"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- 3D Landing Copy & Controls -->
+      <div class="lg:col-span-6 space-y-6">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold tracking-wide uppercase">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 pulse-badge"></span> Real-Time WebGL 3D Canvas
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl xl:text-6xl font-extrabold tracking-tight leading-tight">
+          Next Generation <br>
+          <span class="bg-gradient-to-r from-cyan-400 via-indigo-300 to-brand-500 bg-clip-text text-transparent">Nexus Pro 16 Ultra</span>
+        </h1>
+
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-xl">
+          Crafted from aerospace-grade Grade 5 Titanium with tandem 144Hz AMOLED display. Interact with the 3D viewport, customize chassis materials, and explore internal architecture live.
+        </p>
+
+        <!-- 3D Color Customizer -->
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md max-w-md space-y-2">
+          <div class="flex justify-between items-center text-xs font-semibold text-slate-300">
+            <span>Titanium Chassis Finish:</span>
+            <span id="activeColorName" class="text-cyan-400 font-bold">Titanium Black</span>
+          </div>
+          <div class="flex items-center space-x-3 pt-1">
+            <button class="color-dot active" style="background-color: #1e293b;" onclick="change3DPhoneColor(0x1e293b, 'Titanium Black')" title="Titanium Black"></button>
+            <button class="color-dot" style="background-color: #4f46e5;" onclick="change3DPhoneColor(0x4f46e5, 'Deep Indigo Purple')" title="Deep Indigo"></button>
+            <button class="color-dot" style="background-color: #06b6d4;" onclick="change3DPhoneColor(0x06b6d4, 'Cyber Neon Cyan')" title="Cyber Cyan"></button>
+            <button class="color-dot" style="background-color: #d97706;" onclick="change3DPhoneColor(0xd97706, 'Cosmic Gold')" title="Cosmic Gold"></button>
+            <button class="color-dot" style="background-color: #e2e8f0;" onclick="change3DPhoneColor(0xe2e8f0, 'Silver Ceramic')" title="Silver Ceramic"></button>
+            <button class="ml-auto text-xs text-slate-400 hover:text-white flex items-center gap-1" onclick="toggle3DWireframe()">
+              <i class="fa-solid fa-vector-square"></i> <span id="wireframeBtnText">Wireframe</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Specs Badges -->
+        <div class="flex flex-wrap gap-2.5 pt-2">
+          <span class="spec-tag"><i class="fa-solid fa-microchip text-cyan-400"></i> Snapdragon 8 Gen 4</span>
+          <span class="spec-tag"><i class="fa-solid fa-camera text-brand-400"></i> 200MP Triple Periscope</span>
+          <span class="spec-tag"><i class="fa-solid fa-battery-full text-emerald-400"></i> 5200mAh 100W Fast</span>
+          <span class="spec-tag"><i class="fa-solid fa-satellite text-amber-400"></i> Direct Satellite Link</span>
+        </div>
+
+        <!-- 3D Call to Action -->
+        <div class="flex flex-wrap gap-4 pt-4">
+          <button onclick="openInquiryModal('Nexus Pro 16 Ultra')" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-brand-600 hover:from-cyan-400 hover:to-brand-500 text-white font-bold text-sm shadow-lg shadow-cyan-500/25 transition flex items-center gap-2">
+            <i class="fa-solid fa-bolt"></i> VIP Pre-Order / Inquiry
+          </button>
+          <a href="#store" class="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm transition flex items-center gap-2">
+            <i class="fa-solid fa-cart-shopping"></i> Browse Store Catalog
+          </a>
+        </div>
+      </div>
+
+      <!-- 3D WebGL Canvas Viewport -->
+      <div class="lg:col-span-6 relative h-[480px] sm:h-[540px] flex items-center justify-center">
+        <!-- Interactive Canvas -->
+        <div id="threejs-container" class="rounded-3xl border border-white/10 shadow-2xl bg-gradient-to-b from-slate-900/40 to-slate-950/80 overflow-hidden">
+          <!-- 3D Controls Overlay Guide -->
+          <div class="absolute bottom-4 left-4 right-4 flex justify-between items-center text-[11px] text-slate-400 pointer-events-none z-10 px-3 py-1.5 rounded-lg bg-black/40 backdrop-blur-md">
+            <span><i class="fa-solid fa-arrows-up-down-left-right text-cyan-400 mr-1"></i> Drag to Orbit 360°</span>
+            <span><i class="fa-solid fa-magnifying-glass-plus text-brand-400 mr-1"></i> Scroll to Zoom</span>
+            <span class="text-emerald-400 font-bold">60 FPS WebGL</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- 2. FULL-STACK E-COMMERCE STOREFRONT SECTION                           -->
+  <!-- ===================================================================== -->
+  <section id="store" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+    
+    <!-- Store Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+      <div>
+        <div class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-600 dark:text-cyan-400 tracking-wider uppercase mb-1">
+          <i class="fa-solid fa-sparkles"></i> Curated Hardware Catalog
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          Flagship Tech & Gadgets
+        </h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-xl">
+          Browse authentic high-performance smartphones, laptops, audio systems, and wearables with verified warranty.
+        </p>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="flex flex-wrap gap-2" id="categoryFilterContainer">
+        <button class="cat-pill active px-4 py-2 rounded-xl text-xs font-bold transition bg-brand-600 text-white shadow-md shadow-brand-500/20" data-cat="All">All Products</button>
+        <button class="cat-pill px-4 py-2 rounded-xl text-xs font-bold transition bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-brand-500" data-cat="Smartphones">Smartphones</button>
+        <button class="cat-pill px-4 py-2 rounded-xl text-xs font-bold transition bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-brand-500" data-cat="Laptops">Laptops</button>
+        <button class="cat-pill px-4 py-2 rounded-xl text-xs font-bold transition bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-brand-500" data-cat="Audio">Audio Studio</button>
+        <button class="cat-pill px-4 py-2 rounded-xl text-xs font-bold transition bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-brand-500" data-cat="Wearables">Wearables</button>
+      </div>
+    </div>
+
+    <!-- Secondary Filter & Sort Toolbar -->
+    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-8 flex flex-wrap items-center justify-between gap-4 shadow-sm">
+      <div class="flex items-center gap-3">
+        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Sort By:</span>
+        <select id="sortSelect" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
+          <option value="featured">Featured / Newest</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="rating">Highest Customer Rating</option>
+        </select>
+      </div>
+
+      <div class="text-xs text-slate-500 dark:text-slate-400">
+        Showing <strong id="productCountDisplay" class="text-slate-800 dark:text-slate-200 font-bold">8</strong> items
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Populated dynamically via app.js -->
+    </div>
+  </section>
+
+
+
+  <!-- ===================================================================== -->
+  <!-- 4. REST API TESTER & EXPLORER (THUNDER CLIENT / SWAGGER SIMULATION)   -->
+  <!-- ===================================================================== -->
+  <section id="api-tester" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div class="p-6 sm:p-8 rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-2xl relative overflow-hidden">
+      
+      <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+        <div>
+          <div class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-amber-400 uppercase tracking-widest mb-1">
+            <i class="fa-solid fa-terminal"></i> API Console & Telemetry
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Interactive REST API Explorer</h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">Test live backend endpoints directly from your browser without opening Postman.</p>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-lg">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-badge"></span> Server Status: ONLINE (Port 5000)
+        </div>
+      </div>
+
+      <!-- Endpoint Selector Toolbar -->
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6 bg-slate-950 p-3 rounded-2xl border border-slate-800">
+        <span class="text-xs font-bold font-mono px-3 py-2 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">GET / POST</span>
+        
+        <select id="apiEndpointSelect" class="flex-1 bg-transparent text-sm font-mono text-slate-200 focus:outline-none py-1.5 px-2">
+          <option value="/api/payment/stripe-charge" class="bg-slate-900">POST /api/payment/stripe-charge - Process Stripe Sandbox Payment</option>
+          <option value="/api/payment/paypal-capture" class="bg-slate-900">POST /api/payment/paypal-capture - Capture PayPal Transaction</option>
+          <option value="/api/products" class="bg-slate-900">GET /api/products - Fetch All Hardware Catalog</option>
+          <option value="/api/orders" class="bg-slate-900">GET /api/orders - Fetch Customer Placed Orders</option>
+          <option value="/api/analytics/dashboard" class="bg-slate-900">GET /api/analytics/dashboard - Real-time SaaS Metrics</option>
+          <option value="/api/auth/users" class="bg-slate-900">GET /api/auth/users - User Accounts & Roles</option>
+          <option value="/api/health" class="bg-slate-900">GET /api/health - System & MongoDB Connection Status</option>
+        </select>
+
+        <button onclick="executeApiTest()" id="sendApiBtn" class="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-extrabold text-xs rounded-xl shadow-md transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-paper-plane"></i> Execute Request
+        </button>
+      </div>
+
+      <!-- API Response Console -->
+      <div class="bg-slate-950 rounded-2xl border border-slate-800 p-4 font-mono text-xs overflow-hidden">
+        <div class="flex justify-between items-center text-slate-400 border-b border-slate-800 pb-2 mb-3">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+            <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+            <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+            <span class="text-slate-400 ml-2">Console Output</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <span id="apiStatusBadge" class="text-emerald-400 font-bold">200 OK</span>
+            <span id="apiLatencyBadge" class="text-slate-400">42 ms</span>
+          </div>
+        </div>
+        <pre id="apiConsoleOutput" class="text-slate-300 max-h-72 overflow-y-auto code-box">{
+  "status": "ready",
+  "message": "Click 'Execute Request' to query the live backend API."
+}</pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- MODALS & DRAWERS                                                      -->
+  <!-- ===================================================================== -->
+
+  <!-- Slide-out Shopping Cart Drawer -->
+  <div id="cartOverlay" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+  <aside id="cartDrawer" class="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 z-50 flex flex-col translate-x-full shadow-2xl">
+    <div class="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+      <h3 class="font-bold text-lg text-slate-900 dark:text-white flex items-center gap-2">
+        <i class="fa-solid fa-cart-shopping text-brand-500"></i> Your Cart (<span id="cartDrawerCount">0</span>)
+      </h3>
+      <button onclick="closeCartDrawer()" class="text-slate-400 hover:text-slate-700 dark:hover:text-white text-xl p-1">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Cart Items Scroll -->
+    <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-5 space-y-4">
+      <!-- Injected via app.js -->
+    </div>
+
+    <!-- Cart Footer & Checkout Trigger -->
+    <div class="p-5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 space-y-3">
+      <!-- Promo Code Box -->
+      <div class="flex gap-2">
+        <input type="text" id="promoInput" placeholder="Promo code (try: TECH2026)" class="flex-1 text-xs px-3 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 uppercase font-mono">
+        <button onclick="applyPromoCode()" class="text-xs px-3 py-2 bg-slate-800 dark:bg-slate-700 text-white font-bold rounded-lg hover:bg-slate-700">Apply</button>
+      </div>
+
+      <div class="space-y-1.5 text-xs text-slate-500 dark:text-slate-400">
+        <div class="flex justify-between">
+          <span>Subtotal:</span>
+          <strong id="cartSubtotalVal" class="text-slate-800 dark:text-slate-200">$0.00</strong>
+        </div>
+        <div class="flex justify-between text-emerald-500 font-semibold" id="cartDiscountRow">
+          <span>Discount (15% Promo):</span>
+          <span id="cartDiscountVal">-$0.00</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Express Delivery:</span>
+          <span class="text-emerald-500 font-bold">FREE ($500+)</span>
+        </div>
+        <div class="flex justify-between text-sm font-extrabold text-slate-900 dark:text-white pt-2 border-t border-slate-200 dark:border-slate-800">
+          <span>Payable Amount:</span>
+          <span id="cartTotalVal" class="text-brand-600 dark:text-cyan-400 font-mono text-base">$0.00</span>
+        </div>
+      </div>
+
+      <button onclick="openCheckoutModal()" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold text-sm shadow-lg shadow-brand-500/25 transition flex items-center justify-center gap-2">
+        <i class="fa-solid fa-lock"></i> Proceed to Secure Checkout
+      </button>
+    </div>
+  </aside>
+
+  <!-- Checkout & Payment Modal (Stripe & PayPal Simulation) -->
+  <div id="checkoutModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl relative">
+      <button onclick="closeCheckoutModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 dark:hover:text-white text-xl">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-xl mx-auto mb-2">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">Secure Sandbox Checkout</h3>
+        <p class="text-xs text-slate-400">Complete your transaction with Stripe or PayPal simulation</p>
+      </div>
+
+      <form id="checkoutForm" class="space-y-4">
+        <!-- Shipping Address -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div>
+            <label class="block font-bold mb-1 text-slate-700 dark:text-slate-300">Full Name *</label>
+            <input type="text" id="custName" required placeholder="Ali Khan" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100">
+          </div>
+          <div>
+            <label class="block font-bold mb-1 text-slate-700 dark:text-slate-300">Phone Number *</label>
+            <input type="tel" id="custPhone" required placeholder="+92 300 1234567" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100">
+          </div>
+        </div>
+
+        <div class="text-xs">
+          <label class="block font-bold mb-1 text-slate-700 dark:text-slate-300">Email Address (for Receipt) *</label>
+          <input type="email" id="custEmail" required placeholder="ali@example.com" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100">
+        </div>
+
+        <div class="text-xs">
+          <label class="block font-bold mb-1 text-slate-700 dark:text-slate-300">Shipping Delivery Address *</label>
+          <textarea id="custAddress" required rows="2" placeholder="House #, Street, City, Country..." class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100"></textarea>
+        </div>
+
+        <!-- Payment Method Tabs -->
+        <div class="pt-2">
+          <label class="block text-xs font-bold mb-2 text-slate-700 dark:text-slate-300">Select Payment Gateway:</label>
+          
+          <div class="grid grid-cols-3 gap-2 mb-4 text-xs font-semibold">
+            <label class="payment-method-pill flex flex-col items-center p-3 rounded-xl border border-brand-500 bg-brand-50/50 dark:bg-brand-950/30 cursor-pointer">
+              <input type="radio" name="paymentGateway" value="Stripe" checked class="hidden" onchange="togglePaymentGatewayFields('Stripe')">
+              <i class="fa-brands fa-stripe text-2xl text-indigo-500 mb-1"></i>
+              <span>Stripe Card</span>
+            </label>
+            <label class="payment-method-pill flex flex-col items-center p-3 rounded-xl border border-slate-200 dark:border-slate-800 cursor-pointer" onchange="togglePaymentGatewayFields('PayPal')">
+              <input type="radio" name="paymentGateway" value="PayPal" class="hidden">
+              <i class="fa-brands fa-paypal text-2xl text-blue-500 mb-1"></i>
+              <span>PayPal</span>
+            </label>
+            <label class="payment-method-pill flex flex-col items-center p-3 rounded-xl border border-slate-200 dark:border-slate-800 cursor-pointer" onchange="togglePaymentGatewayFields('COD')">
+              <input type="radio" name="paymentGateway" value="COD" class="hidden">
+              <i class="fa-solid fa-hand-holding-dollar text-2xl text-emerald-500 mb-1"></i>
+              <span>Cash Delivery</span>
+            </label>
+          </div>
+
+          <!-- Stripe Simulated Card Fields -->
+          <div id="stripeFieldsBox" class="stripe-mock-card p-4 rounded-2xl text-white space-y-3 mb-4">
+            <div class="flex justify-between items-center text-xs text-slate-300">
+              <span class="font-mono">Stripe Sandbox (Test Mode)</span>
+              <span class="bg-indigo-500/30 text-indigo-300 px-2 py-0.5 rounded text-[10px] font-mono">4242 Auto-Fill</span>
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-300 mb-1">Card Number</label>
+              <input type="text" id="stripeCardNum" value="4242 •••• •••• 4242" class="w-full bg-black/40 border border-white/20 rounded-lg px-3 py-1.5 text-xs font-mono text-white">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] text-slate-300 mb-1">Expiry Date</label>
+                <input type="text" id="stripeCardExp" value="12/28" class="w-full bg-black/40 border border-white/20 rounded-lg px-3 py-1.5 text-xs font-mono text-white">
+              </div>
+              <div>
+                <label class="block text-[11px] text-slate-300 mb-1">CVC / CVP</label>
+                <input type="text" id="stripeCardCvc" value="888" class="w-full bg-black/40 border border-white/20 rounded-lg px-3 py-1.5 text-xs font-mono text-white">
+              </div>
+            </div>
+          </div>
+
+          <!-- PayPal Simulated Banner -->
+          <div id="paypalFieldsBox" class="hidden p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-center mb-4">
+            <i class="fa-brands fa-paypal text-3xl text-blue-500 mb-2"></i>
+            <p class="text-xs text-blue-400 font-semibold">PayPal Sandbox Express: One-click secure buyer protection.</p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 text-xs space-y-1">
+          <div class="flex justify-between text-slate-500">
+            <span>Total Payable:</span>
+            <strong id="checkoutFinalAmount" class="text-base text-brand-600 dark:text-cyan-400 font-mono">$0.00</strong>
+          </div>
+        </div>
+
+        <button type="submit" id="submitOrderBtn" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-sm shadow-lg shadow-emerald-500/20 transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-lock"></i> Authorize & Confirm Order
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Order Receipt Success Modal -->
+  <div id="orderSuccessModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 sm:p-8 text-center shadow-2xl">
+      <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center text-3xl mx-auto mb-4">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white mb-1">Payment Successful!</h3>
+      <p class="text-xs text-slate-400 mb-6">Your order has been authorized & entered into fulfillment tracking.</p>
+
+      <div class="bg-slate-50 dark:bg-slate-800 rounded-2xl p-4 text-left text-xs space-y-2 mb-6" id="orderSuccessDetails">
+        <!-- Rendered via app.js -->
+      </div>
+
+      <button onclick="closeOrderSuccessModal()" class="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs shadow-md">
+        Continue Shopping / Open Dashboard
+      </button>
+    </div>
+  </div>
+
+  <!-- 3D VIP Inquiry Modal -->
+  <div id="inquiryModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
+      <button onclick="closeInquiryModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white text-xl">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="mb-4">
+        <span class="text-cyan-400 font-bold text-xs uppercase tracking-wider">3D Reservation Desk</span>
+        <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">Reserve Nexus Pro 16 Ultra</h3>
+      </div>
+
+      <form id="inquiryForm" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold mb-1">Your Name</label>
+          <input type="text" id="inqName" required placeholder="Alex Mercer" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+        </div>
+        <div>
+          <label class="block font-bold mb-1">Business Email</label>
+          <input type="email" id="inqEmail" required placeholder="alex@techcorp.io" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+        </div>
+        <div>
+          <label class="block font-bold mb-1">Selected Finish</label>
+          <input type="text" id="inqFinish" readonly value="Titanium Black" class="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800/60 font-semibold text-cyan-400 border border-slate-200 dark:border-slate-700">
+        </div>
+        <div>
+          <label class="block font-bold mb-1">Message / Requirements</label>
+          <textarea id="inqMessage" rows="2" placeholder="Custom preload, enterprise quantity..." class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"></textarea>
+        </div>
+        <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-brand-600 text-white font-bold text-xs shadow-md">
+          Submit 3D Pre-Order Inquiry
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- User Authentication Modal (JWT Login & Registration) -->
+  <div id="authModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl relative">
+      <button onclick="closeAuthModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white text-xl">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex justify-center mb-4">
+        <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center text-xl">
+          <i class="fa-solid fa-key"></i>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-extrabold text-center text-slate-900 dark:text-white mb-1" id="authModalTitle">Sign In to Workspace</h3>
+      <p class="text-xs text-center text-slate-400 mb-6" id="authModalSubtitle">Access customer portal or administrator dashboard</p>
+
+      <!-- Quick Test Accounts -->
+      <div class="mb-4 p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-[11px] text-slate-400 space-y-1">
+        <div class="font-bold text-slate-700 dark:text-slate-300">Quick Demo Accounts:</div>
+        <div class="cursor-pointer hover:text-brand-500" onclick="fillDemoAuth('admin@electrosphere.com', 'adminpassword123')">🔑 <strong>Admin:</strong> admin@electrosphere.com</div>
+        <div class="cursor-pointer hover:text-brand-500" onclick="fillDemoAuth('manager@electrosphere.com', 'managerpassword123')">📦 <strong>Manager:</strong> manager@electrosphere.com</div>
+        <div class="cursor-pointer hover:text-brand-500" onclick="fillDemoAuth('customer@example.com', 'customerpassword123')">🛒 <strong>Customer:</strong> customer@example.com</div>
+      </div>
+
+      <form id="authForm" class="space-y-3 text-xs">
+        <div id="authNameField" class="hidden">
+          <label class="block font-bold mb-1">Full Name</label>
+          <input type="text" id="authNameInput" placeholder="Jane Doe" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+        </div>
+        <div>
+          <label class="block font-bold mb-1">Email Address</label>
+          <input type="email" id="authEmailInput" required placeholder="name@company.com" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+        </div>
+        <div>
+          <label class="block font-bold mb-1">Password</label>
+          <input type="password" id="authPasswordInput" required placeholder="••••••••" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+        </div>
+        <button type="submit" id="authSubmitBtn" class="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs shadow-md transition">
+          Sign In
+        </button>
+      </form>
+
+      <div class="mt-4 text-center text-xs text-slate-400">
+        <span id="authTogglePrompt">Don't have an account?</span>
+        <button onclick="toggleAuthMode()" id="authToggleBtn" class="font-bold text-brand-500 ml-1 hover:underline">Sign Up</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add New Product Modal (SaaS Admin CRUD) -->
+  <div id="addProductModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative">
+      <button onclick="closeAddProductModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white text-xl">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <h3 class="text-xl font-extrabold text-slate-900 dark:text-white mb-1">Add Hardware Product</h3>
+      <p class="text-xs text-slate-400 mb-4">Register new SKU to the live E-Commerce database</p>
+
+      <form id="addProductForm" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold mb-1">Product Title *</label>
+          <input type="text" id="newProdName" required placeholder="e.g. Nexus Tab Ultra 14" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold mb-1">Category *</label>
+            <select id="newProdCat" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <option value="Smartphones">Smartphones</option>
+              <option value="Laptops">Laptops</option>
+              <option value="Audio">Audio Studio</option>
+              <option value="Wearables">Wearables</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold mb-1">Price ($USD) *</label>
+            <input type="number" step="0.01" id="newProdPrice" required placeholder="899.99" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold mb-1">Inventory Stock Units *</label>
+            <input type="number" id="newProdStock" required placeholder="25" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+          </div>
+          <div>
+            <label class="block font-bold mb-1">Badge Tag</label>
+            <input type="text" id="newProdBadge" placeholder="e.g. Flagship 2026" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+          </div>
+        </div>
+        <div>
+          <label class="block font-bold mb-1">Image URL</label>
+          <input type="url" id="newProdImage" placeholder="https://images.unsplash.com/..." class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+        </div>
+        <div>
+          <label class="block font-bold mb-1">Description</label>
+          <textarea id="newProdDesc" rows="2" placeholder="Hardware specifications..." class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"></textarea>
+        </div>
+        <button type="submit" class="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs shadow-md">
+          Save Product to Database
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Popup -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl text-xs font-semibold bg-slate-900 text-white border border-slate-700">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-base" id="toastIcon"></i>
+    <span id="toastMsg">Action executed successfully.</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-auto bg-slate-900 text-slate-400 text-xs py-10 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center space-x-2">
+        <span class="text-white font-extrabold text-sm">Electro<span class="text-cyan-400">Sphere</span></span>
+        <span>• Complete Full-Stack Architecture</span>
+      </div>
+      <div>
+        <span>Three.js 3D WebGL • Stripe & PayPal Sandbox • Chart.js SaaS Analytics • JWT Auth</span>
+      </div>
+      <div class="flex space-x-4">
+        <a href="#experience" class="hover:text-white">3D</a>
+        <a href="#store" class="hover:text-white">Store</a>
+        <a href="#dashboard" class="hover:text-white">SaaS</a>
+        <a href="#api-tester" class="hover:text-white">REST APIs</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic Controller -->
+  <script src="app.js"></script>
+</body>
+</html>
+

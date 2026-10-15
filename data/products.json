@@ -1,0 +1,153 @@
+[
+  {
+    "id": 1,
+    "name": "Nexus Pro 16 Ultra 5G",
+    "category": "Smartphones",
+    "price": 1099.99,
+    "oldPrice": 1299.99,
+    "rating": 4.9,
+    "reviews": 420,
+    "stock": 35,
+    "badge": "Flagship 2026",
+    "image": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
+    "description": "6.8\" Dynamic AMOLED 144Hz, Snapdragon 8 Gen 4, 16GB RAM, 512GB Storage, 200MP Triple Periscope Camera, Titanium Aerospace Frame.",
+    "specs": {
+      "display": "6.8 inch 144Hz AMOLED",
+      "ram": "16GB LPDDR5X",
+      "storage": "512GB UFS 4.0",
+      "battery": "5200 mAh 100W Fast Charge"
+    }
+  },
+  {
+    "id": 2,
+    "name": "AeroBook Studio M3 Max",
+    "category": "Laptops",
+    "price": 1899.00,
+    "oldPrice": 2199.00,
+    "rating": 4.8,
+    "reviews": 290,
+    "stock": 18,
+    "badge": "Top Rated",
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",
+    "description": "Next-gen M3 Max Silicon, 16-inch Liquid Retina XDR 120Hz display, 32GB Unified Memory, 1TB SSD, 22-hour battery life for creative pros.",
+    "specs": {
+      "display": "16.2 inch Liquid Retina XDR",
+      "ram": "32GB Unified Memory",
+      "storage": "1TB NVMe SSD",
+      "battery": "100Wh Battery (22 Hours)"
+    }
+  },
+  {
+    "id": 3,
+    "name": "Sony WH-1000XM6 ANC Studio",
+    "category": "Audio",
+    "price": 379.99,
+    "oldPrice": 449.99,
+    "rating": 4.9,
+    "reviews": 560,
+    "stock": 50,
+    "badge": "Best Seller",
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80",
+    "description": "Industry leading Dual-Processor Noise Cancellation, Hi-Res LDAC Wireless Audio, Multipoint connection, and 38 hours playback.",
+    "specs": {
+      "driver": "40mm Carbon Fiber",
+      "battery": "38 Hours with ANC",
+      "connectivity": "Bluetooth 5.4 + LDAC",
+      "weight": "248 grams"
+    }
+  },
+  {
+    "id": 4,
+    "name": "Titan Chrono Smartwatch Ultra",
+    "category": "Wearables",
+    "price": 429.50,
+    "oldPrice": 499.00,
+    "rating": 4.7,
+    "reviews": 185,
+    "stock": 25,
+    "badge": "New Arrival",
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80",
+    "description": "Sapphire Crystal Glass, Dual-Frequency GPS, ECG, Blood Oxygen Monitor, 100m Water Resistant, 14-day battery life in power mode.",
+    "specs": {
+      "case": "Grade 5 Titanium 49mm",
+      "waterResistance": "100 Meters / 10 ATM",
+      "sensors": "ECG, SpO2, Heart Rate, GPS",
+      "battery": "72 Hours Normal Use"
+    }
+  },
+  {
+    "id": 5,
+    "name": "CyberPad Pro 13 Liquid Vision",
+    "category": "Smartphones",
+    "price": 899.00,
+    "oldPrice": 999.00,
+    "rating": 4.8,
+    "reviews": 310,
+    "badge": "Hot",
+    "image": "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=600&q=80",
+    "description": "13-inch Ultra Retina OLED display with Tandem OLED technology, M4 chip, Apple Pencil Pro support, ultra-thin 5.1mm chassis.",
+    "specs": {
+      "display": "13-inch Tandem OLED",
+      "processor": "M4 10-core CPU",
+      "storage": "256GB / 512GB",
+      "weight": "444 grams"
+    }
+  },
+  {
+    "id": 6,
+    "name": "RTX 5090 Liquid Gaming Station",
+    "category": "Laptops",
+    "price": 2899.99,
+    "oldPrice": 3299.99,
+    "rating": 4.9,
+    "reviews": 140,
+    "stock": 10,
+    "badge": "Ultimate",
+    "image": "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=600&q=80",
+    "description": "Core i9-14900HX, NVIDIA GeForce RTX 5090 16GB VRAM, 64GB DDR5 RAM, 2TB PCIe Gen5 SSD, 240Hz 4K Mini-LED display.",
+    "specs": {
+      "gpu": "RTX 5090 16GB GDDR7",
+      "cpu": "Intel Core i9-14900HX",
+      "ram": "64GB DDR5 5600MHz",
+      "cooling": "Vapor Chamber + Liquid Metal"
+    }
+  },
+  {
+    "id": 7,
+    "name": "AuraPods Spatial Pro Earbuds",
+    "category": "Audio",
+    "price": 199.00,
+    "oldPrice": 249.00,
+    "rating": 4.6,
+    "reviews": 680,
+    "badge": "Popular",
+    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80",
+    "description": "Personalized Spatial Audio with dynamic head tracking, Active Noise Cancellation 2.0, USB-C MagSafe case, IP54 dust and sweat resistance.",
+    "specs": {
+      "battery": "6 hours + 30 hours case",
+      "anc": "Up to 2x more noise cancellation",
+      "connectivity": "Bluetooth 5.3 + Seamless switch",
+      "waterResistance": "IP54"
+    }
+  },
+  {
+    "id": 8,
+    "name": "VisionCore AR Smart Glasses",
+    "category": "Wearables",
+    "price": 599.00,
+    "oldPrice": 699.00,
+    "rating": 4.7,
+    "reviews": 115,
+    "stock": 14,
+    "badge": "Next Gen",
+    "image": "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=600&q=80",
+    "description": "Micro-OLED dual 1080p spatial virtual screens, 120Hz refresh, directional sound speakers, seamless connection with laptops and phones.",
+    "specs": {
+      "display": "Dual Micro-OLED 120Hz",
+      "fov": "50 Degree Field of View",
+      "weight": "76 grams ultra-light",
+      "compatibility": "iOS, Android, Windows, Mac"
+    }
+  }
+]
+
